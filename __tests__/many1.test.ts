@@ -4,7 +4,7 @@ addon(P);
 
 describe('many1', () => {
   it('should fail to parse empty tokens', () => {
-    expect(P.string('x').parse('')).toHaveProperty('status', false);
+    expect(P.string('x').many1().parse('')).toHaveProperty('status', false);
   });
 
   it('should success to parse 1 or more tokens', () => {
@@ -16,5 +16,4 @@ describe('many1', () => {
       expect(result).toHaveProperty('value', xs);
     }
   });
-
 });
