@@ -5,7 +5,7 @@ declare module 'parsimmon' {
     many1(): P.Parser<T[]>;
     endBy(): P.Parser<T[]>;
     endBy1(): P.Parser<T[]>;
-    before<U>(): P.Parser<[T, U]>;
+    manyTill<U>(end: P.Parser<T[]>): P.Parser<T[]>;
 
     /**
      * Stored action that passed to `Parsimmon()`
@@ -43,50 +43,22 @@ export default function addon(p: typeof P): void {
   };
 
   /**
-   * `a.before(b)` similar to `seq(a, b)` but prefer `b` being greedy.
+   * parse iteratively till end.Parse() successes.
    *
-   * NOTE: seq/then doesn't backtrack unless greedy this.parse() fails.
-   *
-   * @param {Parsimmon.Parser} otherParser following parser
+   * @param {Parsimmon.Parser} end terminator
    */
-  p.prototype.before = function<T, U>(otherParser: P.Parser<U>): P.Parser<[T, U]> {
-    return P((input, i) => {
-      let last: FurthestTuple = {
-        furthest: -1,
-        expected: `${this} before ${otherParser}`,
-      };
-      for (let j = i; j < input.length; j += 1) {
-        const result2 = otherParser._(input, j); // TODO: this called many times with varying (i, j).
-        if (!result2.status) {
-          last = updateFurthest(last, {
-            furthest: result2.furthest + i,
-            expected: result2.expected[0],
-          });
-          continue;
-        }
-        const result1 = this._(input.substring(0, j), i);
-        if (!result1.status) {
-          last = updateFurthest(last, {
-            furthest: result1.furthest + i,
-            expected: result1.expected[0],
-          });
-          continue;
-        }
-        // Success
-        return P.makeSuccess<[T, U]>(result2.index, [result1.value, result2.value]);
-      }
+  p.prototype.manyTill = function<T>(end: P.Parser<T>) {
+    if (!P.isParser(end)) throw new Error('end must be a Parser.');
 
-      // NOTE: This could be better by private function `mergeReplies()`
-      return P.makeFailure(last.furthest, last.expected);
-    });
+    let scan: P.Parser<T[]>;
+    scan =
+      end.map(() => []).or(p.seqMap(this as P.Parser<T>, p.lazy(() => scan), (x, xs) => [x].concat(xs)));
+
+    // `this as P.Parser<T>` should be removed after fixing d.ts.  Actually P is a class and P.Parser<T> is P itself.
+
+    // Implemntation by functional style.
+    // NOTE: We could have more efficient one with Parsimmon() and mergeReplies(), a private function.
+
+    return scan;
   };
-}
-
-interface FurthestTuple {
-  furthest: number,
-  expected: string,
-}
-
-function updateFurthest(current: FurthestTuple, next: FurthestTuple) {
-  return (next.furthest > current.furthest) ? next : current;
 }
