@@ -8,10 +8,13 @@
   "author": "Karak",
   "license": "MIT",
   "devDependencies": {
+    "@types/benchmark": "^1.0.30",
     "@types/jest": "^21.1.5",
     "@types/parsimmon": "^1.3.0",
+    "benchmark": "^2.1.4",
     "coveralls": "^3.0.0",
     "jest": "^21.2.1",
+    "microtime": "^2.1.6",
     "parsimmon": "^1.0.0",
     "ts-jest": "^21.2.1",
     "typescript": "^2.6.1"
