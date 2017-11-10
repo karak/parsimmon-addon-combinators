@@ -1,18 +1,11 @@
-/// <reference types="parsimmon" />
+import * as Parsimmon from 'parsimmon';
 
 declare module 'parsimmon' {
   interface Parser<T> {
     many1(): Parsimmon.Parser<T[]>;
-    endBy(): Parsimmon.Parser<T[]>;
-    endBy1(): Parsimmon.Parser<T[]>;
-    manyTill<U>(end: Parsimmon.Parser<T[]>): Parsimmon.Parser<T[]>;
-
-    /**
-     * Stored action that passed to `Parsimmon()`
-     *
-     * @private
-     */
-    _: (input: string, i: number) => Parsimmon.Reply<T>;
+    endBy<U>(sep: Parsimmon.Parser<U>): Parsimmon.Parser<T[]>;
+    endBy1<U>(sep: Parsimmon.Parser<U>): Parsimmon.Parser<T[]>;
+    manyTill<U>(end: Parsimmon.Parser<U>): Parsimmon.Parser<T[]>;
   }
 }
 
@@ -54,7 +47,7 @@ export default function addon(p: typeof Parsimmon): void {
     scan =
       end.map(() => []).or(p.seqMap(this as Parsimmon.Parser<T>, p.lazy(() => scan), (x, xs) => [x].concat(xs)));
 
-    // `this as P.Parser<T>` should be removed after fixing d.ts.  Actually P is a class and P.Parser<T> is P itself.
+    // `this as Parsimmon.Parser<T>` should be removed after fixing d.ts.  Actually Parsimmon is a class and Parsimmon.Parser<T> is Parsimmon itself.
 
     // Implemntation by functional style.
     // NOTE: We could have more efficient one with Parsimmon() and mergeReplies(), a private function.
