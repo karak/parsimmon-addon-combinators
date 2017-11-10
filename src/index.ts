@@ -29,7 +29,7 @@ export default function addon(p: typeof P): void {
    *
    * @param {Parsimmon.Parser} sep separator
    */
-  P.prototype.endBy = function<T>(sep: P.Parser<T>) {
+  p.prototype.endBy = function<T>(sep: P.Parser<T>) {
     return this.skip(sep).many();
   };
 
@@ -38,7 +38,7 @@ export default function addon(p: typeof P): void {
    *
    * @param {Parsimmon.Parser} sep separator
    */
-  P.prototype.endBy1 = function<T>(sep: P.Parser<T>) {
+  p.prototype.endBy1 = function<T>(sep: P.Parser<T>) {
     return this.skip(sep).many1();
   };
 
@@ -49,7 +49,7 @@ export default function addon(p: typeof P): void {
    *
    * @param {Parsimmon.Parser} otherParser following parser
    */
-  P.prototype.before = function<T, U>(otherParser: P.Parser<U>): P.Parser<[T, U]> {
+  p.prototype.before = function<T, U>(otherParser: P.Parser<U>): P.Parser<[T, U]> {
     return P((input, i) => {
       let last: FurthestTuple = {
         furthest: -1,
