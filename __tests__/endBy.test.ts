@@ -1,6 +1,5 @@
 import * as P from 'parsimmon';
-import addon from '../src';
-addon(P);
+import '../src';
 
 describe('endBy1', () => {
   const p = P.string('A').endBy(P.string(';'));

@@ -23,12 +23,11 @@ Install via `npm` or `yarn`.
 npm install parsimmon-addon-combinators
 ```
 
-Then, import and wrap at the top of your code.
+Then, import this after parsimmon.
 
 ```javascript
 import * as P from 'parsimmon';
-import addon from 'parsimmon-addon-combinators';
-addon(P);
+import 'parsimmon-addon-combinators';
 
 P.any.endBy1(P.string(';')).parse('a;b;c;');
 ```

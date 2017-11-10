@@ -1,6 +1,5 @@
 import * as P from 'parsimmon';
-import addon from '../src';
-addon(P);
+import '../src';
 
 describe('many1', () => {
   it('should fail to parse empty tokens', () => {
