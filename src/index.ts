@@ -1,22 +1,22 @@
-import * as P from 'parsimmon';
+/// <reference types="parsimmon" />
 
 declare module 'parsimmon' {
   interface Parser<T> {
-    many1(): P.Parser<T[]>;
-    endBy(): P.Parser<T[]>;
-    endBy1(): P.Parser<T[]>;
-    manyTill<U>(end: P.Parser<T[]>): P.Parser<T[]>;
+    many1(): Parsimmon.Parser<T[]>;
+    endBy(): Parsimmon.Parser<T[]>;
+    endBy1(): Parsimmon.Parser<T[]>;
+    manyTill<U>(end: Parsimmon.Parser<T[]>): Parsimmon.Parser<T[]>;
 
     /**
      * Stored action that passed to `Parsimmon()`
      *
      * @private
      */
-    _: (input: string, i: number) => P.Reply<T>;
+    _: (input: string, i: number) => Parsimmon.Reply<T>;
   }
 }
 
-export default function addon(p: typeof P): void {
+export default function addon(p: typeof Parsimmon): void {
   /**
    * equivalent to `atLeast(1)`
    */
@@ -29,7 +29,7 @@ export default function addon(p: typeof P): void {
    *
    * @param {Parsimmon.Parser} sep separator
    */
-  p.prototype.endBy = function<T>(sep: P.Parser<T>) {
+  p.prototype.endBy = function<T>(sep: Parsimmon.Parser<T>) {
     return this.skip(sep).many();
   };
 
@@ -38,7 +38,7 @@ export default function addon(p: typeof P): void {
    *
    * @param {Parsimmon.Parser} sep separator
    */
-  p.prototype.endBy1 = function<T>(sep: P.Parser<T>) {
+  p.prototype.endBy1 = function<T>(sep: Parsimmon.Parser<T>) {
     return this.skip(sep).many1();
   };
 
@@ -47,12 +47,12 @@ export default function addon(p: typeof P): void {
    *
    * @param {Parsimmon.Parser} end terminator
    */
-  p.prototype.manyTill = function<T>(end: P.Parser<T>) {
-    if (!P.isParser(end)) throw new Error('end must be a Parser.');
+  p.prototype.manyTill = function<T>(end: Parsimmon.Parser<T>) {
+    if (!p.isParser(end)) throw new Error('end must be a Parser.');
 
-    let scan: P.Parser<T[]>;
+    let scan: Parsimmon.Parser<T[]>;
     scan =
-      end.map(() => []).or(p.seqMap(this as P.Parser<T>, p.lazy(() => scan), (x, xs) => [x].concat(xs)));
+      end.map(() => []).or(p.seqMap(this as Parsimmon.Parser<T>, p.lazy(() => scan), (x, xs) => [x].concat(xs)));
 
     // `this as P.Parser<T>` should be removed after fixing d.ts.  Actually P is a class and P.Parser<T> is P itself.
 
