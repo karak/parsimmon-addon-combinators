@@ -27,19 +27,5 @@
     "_build:es5": "tsc",
     "_build:es6": "tsc --target es6 -m es6 && mv lib/index.js lib/index.es6.js",
     "prepublish": "npm run build"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
-    "testPathIgnorePatterns": [
-      "lib"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js",
-      "json"
-    ]
   }
 }

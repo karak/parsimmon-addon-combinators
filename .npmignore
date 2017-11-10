@@ -8,5 +8,6 @@ src/
 .gitignore
 .npmignore
 .travis.yml
+jest.config.js
 tsconfig.json
 yarn.lock
