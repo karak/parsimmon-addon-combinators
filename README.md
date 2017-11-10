@@ -1,4 +1,4 @@
-Pasimmon Combinators Add-on ![Build Status](https://travis-ci.org/karak/parsimmon-addon-combinators.svg?branch=master)
+Parsimmon Combinators Add-on ![Build Status](https://travis-ci.org/karak/parsimmon-addon-combinators.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/karak/parsimmon-addon-combinators/badge.svg?branch=master)](https://coveralls.io/github/karak/parsimmon-addon-combinators?branch=master)
 ==========================
 
@@ -9,8 +9,8 @@ API
 
 This introduces following combinators:
 
-* sepBy
-* sepBy1
+* endBy
+* endBy1
 * many1
 * manyTill
 
@@ -30,5 +30,5 @@ import * as P from 'parsimmon';
 import addon from 'parsimmon-addon-combinators';
 addon(P);
 
-P.any.sepBy1(P.string(',')).parse('a,b,c');
+P.any.endBy1(P.string(';')).parse('a;b;c;');
 ```
