@@ -1,0 +1,12 @@
+__tests__/
+.vscode/
+.vs/
+coverage/
+node_modules/
+src/
+.editorconfig
+.gitignore
+.npmignore
+.travis.yml
+tsconfig.json
+yarn.lock

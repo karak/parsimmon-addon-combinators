@@ -23,7 +23,10 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:ci": "npm run test:coverage && cat ./coverage/lcov.info | $(npm bin)/../coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "build": "tsc"
+    "build": "npm run _build:es6 && npm run _build:es5",
+    "_build:es5": "tsc",
+    "_build:es6": "tsc --target es6 -m es6 && mv lib/index.js lib/index.es6.js",
+    "prepublish": "npm run build"
   },
   "jest": {
     "transform": {
