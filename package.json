@@ -20,6 +20,8 @@
   },
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --covereage",
+    "test:ci": "npm run test:coverage",
     "build": "tsc"
   },
   "jest": {
