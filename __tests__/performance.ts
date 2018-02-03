@@ -19,7 +19,7 @@ describe('performance', () => {
         xByComma.parse('x,x,x');
       })
       .add('end "x" by ";"', () => {
-        xByComma.parse('x;x;x');
+        xBySemicolon.parse('x;x;x');
       })
       .add('many "x" till "."', () => {
         xTillPeriod.parse('xxx.');
