@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@types/benchmark@^1.0.30":
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/@types/benchmark/-/benchmark-1.0.30.tgz#f6bea0baceb178155968b9984f94546f63677592"
+"@types/benchmark@^1.0.31":
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/@types/benchmark/-/benchmark-1.0.31.tgz#2dd3514e93396f362ba5551a7c9ff0da405c1d38"
 
 "@types/jest":
   version "21.1.5"
